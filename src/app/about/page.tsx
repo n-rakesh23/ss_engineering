@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
-import { about, credentials } from "@/content/company";
+import { about } from "@/content/company"; // credentials: re-add with the certifications section
 import { fact, visible } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 import { PageHero } from "@/components/sections/PageHero";
@@ -8,10 +8,12 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TrustItem } from "@/components/ui/Cards";
 import { DraftBlock, DraftTag } from "@/components/ui/Draft";
+import { Photo } from "@/components/ui/Photo";
+import { media } from "@/content/media";
 
 export const metadata = pageMetadata({
   title: `About ${site.name}`,
-  description: `Learn about ${site.name}, a contractual agency — its background, approach and capabilities.`,
+  description: `${site.name} is a labour force, technical manpower and industrial contract works provider based in Jagatsinghpur, Odisha, established in 2025.`,
   path: "/about",
 });
 
@@ -22,7 +24,7 @@ export default function AboutPage() {
   const vision = fact(about.vision);
   const values = visible(about.values);
   const leaders = visible(about.leadership);
-  const creds = visible(credentials);
+  // const creds = visible(credentials); // certifications section disabled for now
 
   return (
     <>
@@ -31,16 +33,17 @@ export default function AboutPage() {
         eyebrow="Company"
         crumbs={[{ label: "Home", href: "/" }, { label: "About" }]}
       >
-        <p>{site.name} is a contractual agency.</p>
+        <p>
+          {site.businessType}. {site.constitution}, established {site.established.value}, based in{" "}
+          {site.headquarters.value}.
+        </p>
       </PageHero>
 
       {(opening || background) && (
         <Section labelledBy="overview-title">
-          <div className="grid gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-4">
+          <div className="grid items-start gap-12 lg:grid-cols-12">
+            <div className="space-y-8 lg:col-span-7">
               <SectionHeading id="overview-title" eyebrow="Overview" title="Company overview" />
-            </div>
-            <div className="space-y-8 lg:col-span-8">
               {opening && (
                 <DraftBlock draft={!about.opening.confirmed}>
                   <p className="text-xl leading-relaxed">{opening}</p>
@@ -52,6 +55,11 @@ export default function AboutPage() {
                 </DraftBlock>
               )}
             </div>
+            <Photo
+              photo={media.safetyBriefing}
+              sizes="(min-width: 1024px) 38vw, (min-width: 640px) 90vw, 100vw"
+              className="mx-auto w-full max-w-[587px] lg:col-span-5"
+            />
           </div>
         </Section>
       )}
@@ -106,6 +114,7 @@ export default function AboutPage() {
         </Section>
       )}
 
+      {/* TEMPORARILY DISABLED (client request): certifications section — re-enable when registrations/certificates are verified.
       {creds.length > 0 && (
         <Section labelledBy="credentials-title">
           <SectionHeading id="credentials-title" eyebrow="Credentials" title="Registrations and credentials" />
@@ -125,6 +134,7 @@ export default function AboutPage() {
           </ul>
         </Section>
       )}
+      */}
 
       <CtaBand />
     </>

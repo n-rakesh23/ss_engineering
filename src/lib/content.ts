@@ -5,13 +5,11 @@ import { credentials, qualityPractices } from "@/content/company";
 import type { Fact } from "@/content/types";
 
 /**
- * Draft content (unconfirmed placeholders) is visible in development, or in
- * a review build with NEXT_PUBLIC_SHOW_DRAFT_CONTENT=true. A normal
- * production build hides it completely.
+ * Review mode. Draft content (unconfirmed placeholders, marked "Awaiting
+ * confirmation") is shown only when NEXT_PUBLIC_SHOW_DRAFT_CONTENT=true —
+ * in dev or a build. Otherwise it is hidden completely.
  */
-export const showDrafts =
-  process.env.NODE_ENV === "development" ||
-  process.env.NEXT_PUBLIC_SHOW_DRAFT_CONTENT === "true";
+export const showDrafts = process.env.NEXT_PUBLIC_SHOW_DRAFT_CONTENT === "true";
 
 export function isVisible(item: { confirmed: boolean }): boolean {
   return item.confirmed || showDrafts;
@@ -56,7 +54,16 @@ export function getContactDetails() {
     phoneHref: c.phoneHref.confirmed ? c.phoneHref.value : null,
     email: fact(c.email),
     emailHref: c.email.confirmed ? `mailto:${c.email.value}` : null,
+    /** mailto: link with subject and body pre-filled. */
+    emailComposeHref: c.email.confirmed
+      ? `mailto:${c.email.value}?subject=${encodeURIComponent(site.messages.emailSubject)}&body=${encodeURIComponent(site.messages.emailBody)}`
+      : null,
     whatsapp: fact(c.whatsapp),
+    /** Opens a WhatsApp chat (app on mobile, WhatsApp Web on desktop) with a message pre-filled. */
+    whatsappHref:
+      c.whatsapp.confirmed && c.whatsappHref.confirmed
+        ? `https://wa.me/${c.whatsappHref.value}?text=${encodeURIComponent(site.messages.whatsapp)}`
+        : null,
     address: fact(c.address),
     hours: fact(c.hours),
   };

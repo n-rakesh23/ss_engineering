@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { site } from "@/content/site";
 import { getContactDetails, getNavigation, visibleServices } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
@@ -9,14 +10,18 @@ export function SiteFooter() {
   const nav = getNavigation();
   const services = visibleServices();
   const contact = getContactDetails();
-  const hasContact = contact.phone || contact.email || contact.address;
+  const hasContact = contact.phone || contact.email || contact.address || contact.hours;
 
   return (
     <footer className="bg-navy-deep text-slate-300">
       <Container className="grid gap-12 py-14 sm:grid-cols-2 lg:grid-cols-12 lg:py-16">
         <div className="lg:col-span-4">
           <Logo inverted />
-          <p className="mt-5 max-w-xs text-sm leading-relaxed">{site.businessType}.</p>
+          <p className="mt-5 max-w-xs text-sm leading-relaxed">
+            {site.businessType}.
+            <br />
+            {site.constitution} · Est. {site.established.value} · {site.headquarters.value}
+          </p>
         </div>
 
         <nav aria-label="Footer" className="lg:col-span-2">
@@ -53,7 +58,7 @@ export function SiteFooter() {
             <ul className="mt-4 space-y-3 text-sm">
               {contact.phone && (
                 <li className="flex gap-2.5">
-                  <Phone aria-hidden className="mt-0.5 size-4 shrink-0 text-sky-300" />
+                  <Phone aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
                   {contact.phoneHref ? (
                     <a href={`tel:${contact.phoneHref}`} className="hover:text-white">{contact.phone}</a>
                   ) : (
@@ -63,18 +68,32 @@ export function SiteFooter() {
               )}
               {contact.email && (
                 <li className="flex gap-2.5">
-                  <Mail aria-hidden className="mt-0.5 size-4 shrink-0 text-sky-300" />
+                  <Mail aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
                   {contact.emailHref ? (
-                    <a href={contact.emailHref} className="break-all hover:text-white">{contact.email}</a>
+                    <a href={contact.emailComposeHref ?? contact.emailHref} className="break-all hover:text-white">{contact.email}</a>
                   ) : (
                     <span>{contact.email}</span>
                   )}
                 </li>
               )}
+              {contact.whatsappHref && (
+                <li className="flex gap-2.5">
+                  <WhatsAppIcon className="mt-0.5 size-4 shrink-0 text-[#25d366]" />
+                  <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                    WhatsApp
+                  </a>
+                </li>
+              )}
               {contact.address && (
                 <li className="flex gap-2.5">
-                  <MapPin aria-hidden className="mt-0.5 size-4 shrink-0 text-sky-300" />
+                  <MapPin aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
                   <span>{contact.address}</span>
+                </li>
+              )}
+              {contact.hours && (
+                <li className="flex gap-2.5">
+                  <Clock aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
+                  <span>{contact.hours}</span>
                 </li>
               )}
             </ul>
@@ -86,9 +105,10 @@ export function SiteFooter() {
       </Container>
 
       <div className="border-t border-white/10">
-        <Container className="flex flex-col gap-3 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+        {/* Right margin / bottom padding keep links clear of the floating WhatsApp + email buttons. */}
+        <Container className="flex flex-col items-start gap-3 pb-36 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between sm:py-6">
           <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
-          <Link href="/privacy-policy" className="hover:text-white">
+          <Link href="/privacy-policy" className="hover:text-white sm:mr-20">
             Privacy Policy
           </Link>
         </Container>

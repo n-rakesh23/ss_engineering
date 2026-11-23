@@ -5,7 +5,7 @@ Planning documents live one folder up (`../01_PROJECT_BRIEF.md` … `../11_…`)
 
 ## Commands
 ```bash
-npm run dev     # http://localhost:3000 — placeholder content visible, marked "Awaiting confirmation"
+npm run dev     # http://localhost:3000 — same content as the live site
 npm run build   # static export to out/ — all unconfirmed content hidden
 npx serve out   # preview the exported site locally
 npm run lint
@@ -19,8 +19,8 @@ One-time setup in the GitHub repo: **Settings → Pages → Build and deployment
 
 - Site URL: `https://<user>.github.io/<repo>/`. The workflow passes the correct sub-path as
   `NEXT_PUBLIC_BASE_PATH` automatically (empty if a custom domain is configured).
-- The workflow currently sets `NEXT_PUBLIC_SHOW_DRAFT_CONTENT: "true"` so the client can review the
-  full layout. Change it to `"false"` once content is confirmed.
+- Review mode is off (`NEXT_PUBLIC_SHOW_DRAFT_CONTENT: "false"` in the workflow). Set it to `"true"`
+  to preview unconfirmed placeholders, marked "Awaiting confirmation".
 - `scripts/fix-export-segments.mjs` runs after every build (`postbuild`). It works around a
   Next.js 16.4 static-export bug where client-side navigation requests page-data files under
   names the exporter didn't write. Remove it once Next.js fixes this.
@@ -37,8 +37,9 @@ All company facts live in `src/content/` and each one carries `confirmed: true |
 
 **To publish a fact:** replace the placeholder with client-approved wording and set `confirmed: true`.
 
-- **Development / review builds** show placeholders with an amber "Awaiting confirmation" marker.
-- **Production builds** omit unconfirmed content entirely. Services, Projects and Quality & Safety
+- **Review mode** (`NEXT_PUBLIC_SHOW_DRAFT_CONTENT=true`, in dev or a build) shows placeholders with an
+  amber "Awaiting confirmation" marker. To preview locally: `set NEXT_PUBLIC_SHOW_DRAFT_CONTENT=true && npm run dev` (cmd).
+- **Normally** (review mode off) unconfirmed content is omitted entirely. Services, Projects and Quality & Safety
   pages (and their nav links and sitemap entries) only exist once they have publishable content.
 
 ## Environment variables (all optional, none secret)

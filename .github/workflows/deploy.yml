@@ -36,9 +36,9 @@ jobs:
         env:
           # "/ss_engineering" on github.io; empty when a custom domain is set.
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-          # Review preview: shows placeholder content marked "Awaiting confirmation".
-          # Set to "false" (or remove) once the client has confirmed the content.
-          NEXT_PUBLIC_SHOW_DRAFT_CONTENT: "true"
+          # Review mode is OFF: unconfirmed content is hidden.
+          # Set to "true" to preview placeholders marked "Awaiting confirmation".
+          NEXT_PUBLIC_SHOW_DRAFT_CONTENT: "false"
 
       - uses: actions/upload-pages-artifact@v3
         with:

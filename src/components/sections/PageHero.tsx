@@ -19,7 +19,7 @@ export function PageHero({
       <Container className="relative py-14 sm:py-16 lg:py-20">
         <Breadcrumbs items={crumbs} inverted />
         {eyebrow && (
-          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-sky-200">{eyebrow}</p>
+          <p className="mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-accent">{eyebrow}</p>
         )}
         <h1 className={`${eyebrow ? "mt-3" : "mt-8"} max-w-3xl text-4xl font-extrabold leading-[1.1] !text-white sm:text-5xl`}>
           {title}

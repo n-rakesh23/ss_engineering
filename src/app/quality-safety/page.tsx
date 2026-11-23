@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { site } from "@/content/site";
-import { credentials, qualityPractices } from "@/content/company";
+import { qualityPractices } from "@/content/company"; // credentials: re-add with the certifications section
 import { hasQualityContent, visible } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 import { PageHero } from "@/components/sections/PageHero";
@@ -8,7 +8,9 @@ import { CtaBand } from "@/components/sections/CtaBand";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TrustItem } from "@/components/ui/Cards";
-import { DraftTag } from "@/components/ui/Draft";
+// import { DraftTag } from "@/components/ui/Draft"; // used by the certifications table
+import { Photo } from "@/components/ui/Photo";
+import { media } from "@/content/media";
 
 export const metadata = pageMetadata({
   title: `Quality & Safety | ${site.name}`,
@@ -20,7 +22,7 @@ export default function QualitySafetyPage() {
   // Published only when real, documented content exists.
   if (!hasQualityContent()) notFound();
   const practices = visible(qualityPractices);
-  const creds = visible(credentials);
+  // const creds = visible(credentials); // certifications section disabled for now
 
   return (
     <>
@@ -30,15 +32,25 @@ export default function QualitySafetyPage() {
 
       {practices.length > 0 && (
         <Section labelledBy="practices-title">
-          <SectionHeading id="practices-title" eyebrow="Practices" title="Documented practices" />
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {practices.map((p, i) => (
-              <TrustItem key={i} title={p.title} description={p.description} draft={!p.confirmed} />
-            ))}
+          <div className="grid items-start gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-6">
+              <SectionHeading id="practices-title" eyebrow="Practices" title="How we keep sites safe" />
+              <div className="mt-10 grid gap-8">
+                {practices.map((p, i) => (
+                  <TrustItem key={i} title={p.title} description={p.description} draft={!p.confirmed} />
+                ))}
+              </div>
+            </div>
+            <Photo
+              photo={media.safetyBriefing}
+              sizes="(min-width: 1024px) 42vw, (min-width: 640px) 90vw, 100vw"
+              className="mx-auto w-full max-w-[587px] lg:col-span-6"
+            />
           </div>
         </Section>
       )}
 
+      {/* TEMPORARILY DISABLED (client request): certifications section — re-enable when registrations/certificates are verified.
       {creds.length > 0 && (
         <Section tone="surface" labelledBy="certs-title">
           <SectionHeading id="certs-title" eyebrow="Certifications" title="Certifications and registrations" />
@@ -71,6 +83,7 @@ export default function QualitySafetyPage() {
           </div>
         </Section>
       )}
+      */}
 
       <CtaBand />
     </>

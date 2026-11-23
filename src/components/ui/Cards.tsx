@@ -52,7 +52,11 @@ export function ProjectCard({ project }: { project: Project }) {
         {draft && <DraftTag className="mb-3 self-start" />}
         <h3 className="text-lg font-bold">{project.title}</h3>
         <p className="mt-1 text-sm text-muted">{project.client}</p>
-        <p className="mt-4 flex-1 text-[15px] leading-relaxed">{project.scope}</p>
+        <p className="mt-4 text-[15px] leading-relaxed">{project.scope}</p>
+        {project.outcome && (
+          <p className="mt-3 flex-1 border-l-2 border-accent pl-3 text-sm leading-relaxed text-navy">{project.outcome}</p>
+        )}
+        {!project.outcome && <span className="flex-1" />}
         <p className="mt-5 flex items-center gap-1.5 text-sm text-muted">
           <MapPin aria-hidden className="size-4 text-brand" />
           {project.location}

@@ -51,6 +51,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
   const service = getService((await params).slug);
   if (!service) notFound();
   const draft = !service.confirmed;
+  const hasAside = service.sectors.length > 0 || service.approach.length > 0;
 
   return (
     <>
@@ -69,7 +70,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
       <Section>
         <DraftBlock draft={draft}>
           <div className="grid gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-7">
+            <div className={hasAside ? "lg:col-span-7" : "lg:col-span-9"}>
               <h2 className="text-2xl font-bold">Overview</h2>
               <p className="mt-4 text-lg leading-relaxed text-muted">{service.overview}</p>
               <div className="mt-12 grid gap-10 sm:grid-cols-2">
@@ -77,6 +78,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
                 <List title="Typical deliverables" items={service.deliverables} />
               </div>
             </div>
+            {hasAside && (
             <aside className="space-y-8 lg:col-span-5">
               {service.sectors.length > 0 && (
                 <div className="rounded-card border border-line bg-surface p-7">
@@ -106,6 +108,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
                 </div>
               )}
             </aside>
+            )}
           </div>
         </DraftBlock>
       </Section>

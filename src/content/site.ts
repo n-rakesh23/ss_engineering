@@ -2,16 +2,16 @@ import type { Fact } from "./types";
 
 /**
  * Central company configuration.
- * TODO(client): every `confirmed: false` value below must be replaced with
- * information from the completed discovery questionnaire
- * (11_CLIENT_DISCOVERY_QUESTIONNAIRE.md) before it can appear publicly.
+ * Source: "S S ENGINEERING_details.pdf" (company profile supplied by the
+ * company). Values with `confirmed: false` were not in the profile and are
+ * still awaiting information.
  */
 export const site = {
-  /** Brand name. Never append "WORKS" or any other suffix. */
+  /** Brand name as shown on the approved logo. Never append "WORKS". */
   name: "S.S. Engineering",
   nameUpper: "S.S. ENGINEERING",
-  /** Confirmed in the project brief. */
-  businessType: "Contractual agency",
+  businessType: "Labour force, technical manpower & industrial contract works",
+  constitution: "Sole Proprietorship",
 
   /**
    * Production URL. Set NEXT_PUBLIC_SITE_URL once the domain is confirmed.
@@ -21,51 +21,64 @@ export const site = {
 
   logo: {
     /**
-     * TODO(client): place the approved master logo at /public/logos/ and set
-     * the path here (SVG preferred). Never redraw or recolour the logo.
+     * Raster logo extracted from the company profile PDF.
+     * TODO(client): replace with the vector (SVG) master when supplied.
      */
-    src: null as string | null,
-    width: 64,
-    height: 64,
+    src: "/logos/ss-engineering-logo.jpg" as string | null,
+    width: 369,
+    height: 369,
   },
 
   tagline: {
-    value: "Engineering and contract services you can rely on",
-    confirmed: false,
+    value: "Labour Force, Technical Manpower & Industrial Contract Works",
+    confirmed: true,
   } satisfies Fact,
 
   description: {
     value:
-      "S.S. Engineering supports [CUSTOMER TYPE / INDUSTRY] with [CONFIRMED SERVICE CATEGORIES] across [CONFIRMED SERVICE AREA].",
-    confirmed: false,
+      "Delivering reliable manpower, precision execution and complete safety across construction sites and industrial plants.",
+    confirmed: true,
   } satisfies Fact,
 
   intro: {
     value:
-      "S.S. Engineering is a contractual agency focused on [CONFIRMED BUSINESS SCOPE]. We work with [CONFIRMED CUSTOMER TYPES] to support [CONFIRMED OUTCOMES / DELIVERABLES].",
-    confirmed: false,
+      "S.S. Engineering is a contract technical labour service provider for mechanical works and labour force in industrial plants. We deliver skilled manpower and complete execution support, from mobilisation to project completion.",
+    confirmed: true,
   } satisfies Fact,
 
-  established: { value: "[YEAR]", confirmed: false } satisfies Fact,
-  serviceArea: { value: "[CONFIRMED SERVICE AREA]", confirmed: false } satisfies Fact,
+  established: { value: "2025", confirmed: true } satisfies Fact,
+  headquarters: { value: "Jagatsinghpur, Odisha", confirmed: true } satisfies Fact,
+  coreSector: { value: "Construction & Industrial Plants", confirmed: true } satisfies Fact,
+  serviceArea: { value: "Pan-India execution", confirmed: true } satisfies Fact,
 
   contact: {
-    phone: { value: "[APPROVED PHONE]", confirmed: false } satisfies Fact,
-    /** E.164 format for tel: links, e.g. +911234567890 */
-    phoneHref: { value: "", confirmed: false } satisfies Fact,
-    email: { value: "[APPROVED BUSINESS EMAIL]", confirmed: false } satisfies Fact,
-    whatsapp: { value: "[APPROVED WHATSAPP NUMBER]", confirmed: false } satisfies Fact,
-    address: {
-      value: "[APPROVED OFFICE ADDRESS]",
-      confirmed: false,
-    } satisfies Fact,
-    hours: { value: "[BUSINESS HOURS]", confirmed: false } satisfies Fact,
+    phone: { value: "+91 88276 12134", confirmed: true } satisfies Fact,
+    /** E.164 format for tel: links */
+    phoneHref: { value: "+918827612134", confirmed: true } satisfies Fact,
+    email: { value: "manoj.swain604@gmail.com", confirmed: true } satisfies Fact,
+    /**
+     * WhatsApp — the profile lists no separate number, so this uses the
+     * business phone. TODO(client): confirm this number is on WhatsApp.
+     */
+    whatsapp: { value: "+91 88276 12134", confirmed: true } satisfies Fact,
+    /** Digits only, with country code, for wa.me links. */
+    whatsappHref: { value: "918827612134", confirmed: true } satisfies Fact,
+    address: { value: "Jagatsinghpur, Odisha, India", confirmed: true } satisfies Fact,
+    /** Confirmed by the company. */
+    hours: { value: "Monday to Saturday, 9:00 AM – 6:00 PM", confirmed: true } satisfies Fact,
+  },
+
+  /** Pre-filled text for the WhatsApp and email buttons. */
+  messages: {
+    whatsapp: "Hello S.S. Engineering, I would like to discuss a manpower / contract works requirement.",
+    emailSubject: "Enquiry from the S.S. Engineering website",
+    emailBody: "Hello S.S. Engineering,\n\nI would like to discuss the following requirement:\n\n",
   },
 
   social: [] as { label: string; href: string }[],
 
   form: {
-    /** TODO(client): decide whether phone is required on the enquiry form. */
+    /** Manpower enquiries are usually followed up by phone. TODO(client): confirm. */
     phoneRequired: false,
   },
 } as const;

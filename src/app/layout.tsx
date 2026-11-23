@@ -6,6 +6,7 @@ import { showDrafts } from "@/lib/content";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { DraftBanner } from "@/components/ui/Draft";
+import { FloatingContact } from "@/components/ui/ContactButtons";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], display: "swap" });
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#102a43",
+  themeColor: "#0c1f5c",
 };
 
 function OrganizationJsonLd() {
@@ -39,6 +40,15 @@ function OrganizationJsonLd() {
   if (site.contact.phone.confirmed) data.telephone = site.contact.phone.value;
   if (site.contact.email.confirmed) data.email = site.contact.email.value;
   if (site.contact.address.confirmed) data.address = site.contact.address.value;
+  // Keep in sync with site.contact.hours (Monday–Saturday, 9 AM – 6 PM).
+  if (site.contact.hours.confirmed) {
+    data.openingHoursSpecification = {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "09:00",
+      closes: "18:00",
+    };
+  }
   if (site.social.length) data.sameAs = site.social.map((s) => s.href);
   return (
     <script
@@ -64,6 +74,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <FloatingContact />
         <OrganizationJsonLd />
       </body>
     </html>

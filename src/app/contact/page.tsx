@@ -1,4 +1,5 @@
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import type { ReactNode } from "react";
 import { site } from "@/content/site";
 import { getContactDetails, visibleServices } from "@/lib/content";
@@ -7,6 +8,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Section } from "@/components/ui/Section";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { DraftTag } from "@/components/ui/Draft";
+import { QuickContactButtons } from "@/components/ui/ContactButtons";
 
 export const metadata = pageMetadata({
   title: `Contact ${site.name} | Send an Enquiry`,
@@ -57,7 +59,12 @@ export default function ContactPage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
-            <h2 className="text-2xl font-bold">Enquiry form</h2>
+            <h2 className="text-2xl font-bold">Quick contact</h2>
+            <p className="mt-2 text-muted">Prefer to talk directly? Message or email us.</p>
+            <div className="mt-5">
+              <QuickContactButtons />
+            </div>
+            <h2 className="mt-12 text-2xl font-bold">Enquiry form</h2>
             <div className="mt-6">
               <ContactForm serviceOptions={serviceOptions} phoneRequired={site.form.phoneRequired} />
             </div>
@@ -77,12 +84,18 @@ export default function ContactPage() {
                   )}
                   {c.email && (
                     <DetailRow icon={<Mail aria-hidden className="size-5" />} label="Email" draft={!sc.email.confirmed}>
-                      {c.emailHref ? <a className="hover:text-brand" href={c.emailHref}>{c.email}</a> : c.email}
+                      {c.emailComposeHref ? <a className="hover:text-brand" href={c.emailComposeHref}>{c.email}</a> : c.email}
                     </DetailRow>
                   )}
                   {c.whatsapp && (
-                    <DetailRow icon={<MessageCircle aria-hidden className="size-5" />} label="WhatsApp" draft={!sc.whatsapp.confirmed}>
-                      {c.whatsapp}
+                    <DetailRow icon={<WhatsAppIcon className="size-5 text-[#0e7a4a]" />} label="WhatsApp" draft={!sc.whatsapp.confirmed}>
+                      {c.whatsappHref ? (
+                        <a className="hover:text-brand" href={c.whatsappHref} target="_blank" rel="noopener noreferrer">
+                          {c.whatsapp}
+                        </a>
+                      ) : (
+                        c.whatsapp
+                      )}
                     </DetailRow>
                   )}
                   {c.address && (

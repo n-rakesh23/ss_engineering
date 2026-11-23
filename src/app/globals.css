@@ -1,21 +1,24 @@
 @import "tailwindcss";
 
 /*
- * Brand tokens — PROVISIONAL values from 02_BRAND_GUIDELINES.md.
- * TODO(client): verify against the approved master logo file.
+ * Brand tokens — sampled from the approved logo (company profile PDF):
+ * royal blue swoosh/ring ≈ #0A2484, cyan ≈ #00A8DC.
+ * TODO(client): confirm exact values from the vector master logo when supplied.
  */
 @theme {
-  --color-brand: #145da0;
-  --color-brand-dark: #0f4a80;
-  --color-brand-tint: #e8f0f8;
-  --color-navy: #102a43;
-  --color-navy-deep: #0b1f33;
-  --color-charcoal: #202a35;
+  --color-brand: #1a3a9c;
+  --color-brand-dark: #132c7c;
+  --color-brand-tint: #e9eef9;
+  /* Logo cyan — decorative / on dark backgrounds only (low contrast on white). */
+  --color-accent: #00a8dc;
+  --color-navy: #0c1f5c;
+  --color-navy-deep: #081640;
+  --color-charcoal: #1f2836;
   --color-cool-grey: #667788;
   /* Slightly darker than Cool Grey so secondary text meets WCAG AA on Light Grey. */
   --color-muted: #55657a;
-  --color-surface: #f3f6f9;
-  --color-line: #dce3ea;
+  --color-surface: #f3f6fa;
+  --color-line: #dce3ec;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;

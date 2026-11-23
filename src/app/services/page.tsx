@@ -9,7 +9,7 @@ import { ServiceCard } from "@/components/ui/Cards";
 
 export const metadata = pageMetadata({
   title: `Services | ${site.name}`,
-  description: `Explore ${site.name}'s contract services, scope and delivery approach.`,
+  description: `Labour force supply, technical manpower, contract works, rotary equipment and erection & commissioning services from ${site.name}.`,
   path: "/services",
 });
 
@@ -21,7 +21,9 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero title="Our services" eyebrow="Services" crumbs={[{ label: "Home", href: "/" }, { label: "Services" }]}>
-        <p>An overview of the contract services {site.name} provides.</p>
+        <p>
+          Reliable manpower and complete execution support for construction sites and industrial plants.
+        </p>
       </PageHero>
       <Section tone="surface">
         <h2 className="sr-only">Service list</h2>

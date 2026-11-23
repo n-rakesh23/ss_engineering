@@ -20,10 +20,10 @@ export function SectionHeading({
       {eyebrow && (
         <p
           className={`mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] ${
-            inverted ? "text-sky-200" : "text-brand"
+            inverted ? "text-accent" : "text-brand"
           } ${align === "center" ? "justify-center" : ""}`}
         >
-          <span aria-hidden className={`h-px w-8 ${inverted ? "bg-sky-200/60" : "bg-brand/50"}`} />
+          <span aria-hidden className={`h-px w-8 ${inverted ? "bg-accent/70" : "bg-brand/50"}`} />
           {eyebrow}
         </p>
       )}

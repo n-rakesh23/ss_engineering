@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { site } from "@/content/site";
-import { differentiators, qualityPractices } from "@/content/company";
+import { about, differentiators, qualityPractices } from "@/content/company";
 import { fact, hasQualityContent, visible, visibleProjects, visibleServices } from "@/lib/content";
 import { pageMetadata } from "@/lib/metadata";
 import { Container } from "@/components/ui/Container";
@@ -9,16 +9,14 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ButtonLink } from "@/components/ui/Button";
 import { ProjectCard, ServiceCard, TrustItem } from "@/components/ui/Cards";
 import { DraftBlock } from "@/components/ui/Draft";
-import { HeroGraphic } from "@/components/sections/HeroGraphic";
+import { Photo } from "@/components/ui/Photo";
+import { media } from "@/content/media";
 import { CtaBand } from "@/components/sections/CtaBand";
 
 export const metadata = pageMetadata({
-  title: site.serviceArea.confirmed
-    ? `${site.name} | Contract Services in ${site.serviceArea.value}`
-    : `${site.name} | Contractual Agency`,
-  description: site.description.confirmed
-    ? site.description.value
-    : `${site.name} is a contractual agency. Contact the team to discuss a project or contractual requirement.`,
+  title: `${site.name} | Labour Force & Industrial Contract Works, Odisha`,
+  description:
+    "S.S. Engineering supplies labour force and technical manpower and executes industrial contract works for construction sites and industrial plants. Based in Jagatsinghpur, Odisha, with pan-India execution.",
   path: "/",
 });
 
@@ -30,6 +28,12 @@ export default function HomePage() {
   const reasons = visible(differentiators);
   const projects = visibleProjects().slice(0, 3);
   const practices = visible(qualityPractices);
+  const commitment = fact(about.commitment);
+  const facts = [
+    { label: "Established", fact: site.established, note: site.constitution },
+    { label: "Headquarters", fact: site.headquarters, note: "India" },
+    { label: "Core sector", fact: site.coreSector, note: site.serviceArea.confirmed ? site.serviceArea.value : "" },
+  ].filter((f) => f.fact.confirmed);
 
   return (
     <>
@@ -37,9 +41,10 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-navy bg-blueprint text-white">
         <Container className="grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:py-28">
           <div className="animate-rise lg:col-span-7">
-            <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-sky-200">
-              <span aria-hidden className="h-px w-8 bg-sky-200/60" />
-              {site.nameUpper} · {site.businessType}
+            <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+              <span aria-hidden className="h-px w-8 bg-accent/70" />
+              {site.established.confirmed ? `Est. ${site.established.value}` : site.nameUpper}
+              {site.headquarters.confirmed && ` · ${site.headquarters.value}`}
             </p>
             <DraftBlock draft={tagline !== null && !site.tagline.confirmed} className="mt-6">
               <h1 className="text-4xl font-extrabold leading-[1.08] !text-white sm:text-5xl lg:text-6xl">
@@ -63,12 +68,33 @@ export default function HomePage() {
               )}
             </div>
           </div>
-          <div className="hidden justify-center lg:col-span-5 lg:flex">
-            <HeroGraphic />
-          </div>
+          <Photo
+            photo={media.hero}
+            frame="dark"
+            priority
+            sizes="(min-width: 1024px) 42vw, (min-width: 640px) 90vw, 100vw"
+            className="animate-rise lg:col-span-5"
+          />
         </Container>
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-1 bg-brand" />
       </section>
+
+      {/* Key facts (verified, from the company profile) */}
+      {facts.length > 0 && (
+        <section aria-label="Company facts" className="border-b border-line bg-white">
+          <Container>
+            <dl className="grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+              {facts.map((f) => (
+                <div key={f.label} className="py-6 sm:px-8 sm:first:pl-0">
+                  <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-brand">{f.label}</dt>
+                  <dd className="mt-1.5 font-display text-xl font-bold text-navy">{f.fact.value}</dd>
+                  {f.note && <dd className="mt-0.5 text-sm text-muted">{f.note}</dd>}
+                </div>
+              ))}
+            </dl>
+          </Container>
+        </section>
+      )}
 
       {/* Intro */}
       {intro && (
@@ -110,7 +136,7 @@ export default function HomePage() {
       {reasons.length > 0 && (
         <Section labelledBy="why-title">
           <SectionHeading id="why-title" eyebrow="Why work with us" title={`Why ${site.name}`} />
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {reasons.map((r, i) => (
               <TrustItem key={i} title={r.title} description={r.description} draft={!r.confirmed} />
             ))}
@@ -156,6 +182,19 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
+        </Section>
+      )}
+
+      {commitment && (
+        <Section labelledBy="commitment-title">
+          <figure className="mx-auto max-w-4xl text-center">
+            <h2 id="commitment-title" className="text-xs font-semibold uppercase tracking-[0.16em] !text-brand">
+              Our commitment
+            </h2>
+            <blockquote className="mt-6 font-display text-2xl font-semibold leading-snug text-navy sm:text-3xl">
+              “{commitment}”
+            </blockquote>
+          </figure>
         </Section>
       )}
 

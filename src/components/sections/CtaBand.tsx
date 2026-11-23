@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { InlineContactLinks } from "@/components/ui/ContactButtons";
 
 export function CtaBand({
   title = "Have a requirement to discuss?",
@@ -21,6 +22,7 @@ export function CtaBand({
               {title}
             </h2>
             <p className="mt-3 text-lg text-blue-100">{text}</p>
+            <InlineContactLinks className="mt-6" />
           </div>
           <div className="relative mt-8 shrink-0 lg:mt-0">
             <ButtonLink href="/contact" variant="inverted">
