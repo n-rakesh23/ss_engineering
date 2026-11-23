@@ -6,10 +6,24 @@ Planning documents live one folder up (`../01_PROJECT_BRIEF.md` … `../11_…`)
 ## Commands
 ```bash
 npm run dev     # http://localhost:3000 — placeholder content visible, marked "Awaiting confirmation"
-npm run build   # production build — all unconfirmed content hidden
-npm run start   # serve the production build
+npm run build   # static export to out/ — all unconfirmed content hidden
+npx serve out   # preview the exported site locally
 npm run lint
 ```
+`npm run start` does not work with `output: "export"`; use `npx serve out` instead.
+
+## Deployment — GitHub Pages
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the static export and publishes it.
+
+One-time setup in the GitHub repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+- Site URL: `https://<user>.github.io/<repo>/`. The workflow passes the correct sub-path as
+  `NEXT_PUBLIC_BASE_PATH` automatically (empty if a custom domain is configured).
+- The workflow currently sets `NEXT_PUBLIC_SHOW_DRAFT_CONTENT: "true"` so the client can review the
+  full layout. Change it to `"false"` once content is confirmed.
+- `scripts/fix-export-segments.mjs` runs after every build (`postbuild`). It works around a
+  Next.js 16.4 static-export bug where client-side navigation requests page-data files under
+  names the exporter didn't write. Remove it once Next.js fixes this.
 
 ## How content works
 All company facts live in `src/content/` and each one carries `confirmed: true | false`.
@@ -32,6 +46,7 @@ All company facts live in `src/content/` and each one carries `confirmed: true |
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | Confirmed production domain, e.g. `https://example.com`. Enables canonical URLs, sitemap, Organization JSON-LD and indexing. While unset, the site is `noindex` and robots.txt disallows all. |
 | `NEXT_PUBLIC_SHOW_DRAFT_CONTENT=true` | Show placeholder content in a deployed review build (always `noindex`). |
+| `NEXT_PUBLIC_BASE_PATH` | Sub-path the site is served from, e.g. `/ss_engineering`. Set automatically by the deploy workflow. |
 
 ## Logo
 The approved master logo has not been supplied. Put it in `public/logos/` (SVG preferred) and set
