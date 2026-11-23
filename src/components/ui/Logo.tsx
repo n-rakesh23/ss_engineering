@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/content/site";
 import { showDrafts } from "@/lib/content";
+import { asset } from "@/lib/asset";
 
 /**
  * Uses the approved master logo when `site.logo.src` is set.
@@ -13,7 +14,7 @@ export function Logo({ inverted = false }: { inverted?: boolean }) {
   return (
     <Link href="/" className="group flex min-w-0 items-center gap-2.5 sm:gap-3" aria-label={`${site.name} — home`}>
       {src ? (
-        <Image src={src} alt="" width={width} height={height} priority className="h-11 w-auto sm:h-12" />
+        <Image src={asset(src)} alt="" width={width} height={height} priority className="h-11 w-auto sm:h-12" />
       ) : (
         showDrafts && (
           <span

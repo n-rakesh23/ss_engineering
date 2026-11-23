@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight, MapPin } from "lucide-react";
 import type { Project, Service } from "@/content/types";
 import { DraftTag } from "./Draft";
+import { asset } from "@/lib/asset";
 
 export function ServiceCard({ service, index }: { service: Service; index: number }) {
   return (
@@ -34,7 +35,7 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className="relative aspect-[16/10] bg-surface bg-blueprint-light">
         {project.image ? (
           <Image
-            src={project.image.src}
+            src={asset(project.image.src)}
             alt={project.image.alt}
             width={project.image.width}
             height={project.image.height}

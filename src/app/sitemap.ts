@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { site } from "@/content/site";
 import { hasQualityContent, showDrafts, visibleProjects, visibleServices } from "@/lib/content";
 
+// Required for the static export used on GitHub Pages.
+export const dynamic = "force-static";
+
 /** Lists only canonical, published pages. Empty until the domain is confirmed. */
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!site.url || showDrafts) return [];
