@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
+// The site is fully static marketing content with no request-time data,
+// so Cache Components / Partial Prefetching are intentionally not enabled.
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  poweredByHeader: false,
   turbopack: {
     rules: {
       "*.css": {
